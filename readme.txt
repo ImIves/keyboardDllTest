@@ -1,2 +1,3 @@
 keyboardDLLTest
 该工程包含keyboard库及测试工程
+该项目是Qt5.9开发,适配环境Ubuntu/windows
