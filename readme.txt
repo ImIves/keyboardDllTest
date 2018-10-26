@@ -1,3 +1,5 @@
 keyboardDLLTest
 该工程包含keyboard库及测试工程
 该项目是Qt5.9开发,适配环境Ubuntu/windows
+以动态库的形式,方便集成到app,而只需要在一个app中创建一个对象即可
+该工程以对模态对话框进行优化,皆可使用了.
