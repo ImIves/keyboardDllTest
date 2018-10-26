@@ -71,12 +71,13 @@ void Keyboard::focusChanged(QWidget *oldWidget, QWidget *newWidget)
     }
     file.close();
     //设置固定键盘高度
-    int nFixHeight = 360;
-    m_mainWidget->setFixedHeight(nFixHeight);
+    int nFixHeight = 270;
+    int nFixWidth = 360;
+    m_mainWidget->setFixedSize(nFixWidth,nFixHeight);
     QDesktopWidget* desktopWidget = QApplication::desktop();
     QRect screenRect = desktopWidget->screenGeometry();
     int gWidth = screenRect.width();
     int gHeight = screenRect.height();
-    m_mainWidget->setGeometry(QRect(0,gHeight-nFixHeight,gWidth,nFixHeight));
+    m_mainWidget->setGeometry(QRect(gWidth/2-nFixWidth/2,gHeight-nFixHeight,nFixWidth,nFixHeight));
     m_mainWidget->show();
 }

@@ -11,11 +11,16 @@ FormDigital::FormDigital(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    setWindowFlags(Qt::WindowDoesNotAcceptFocus | Qt::FramelessWindowHint |
+    setWindowFlags(Qt::WindowDoesNotAcceptFocus /*| Qt::FramelessWindowHint */|
                        Qt::WindowStaysOnTopHint | Qt::Tool | Qt::X11BypassWindowManagerHint);
 
     inputEdit = new QLineEdit(this);
     inputEdit->hide();
+
+    ui->pushButton_12->setIcon(QIcon(":/res/backspace.png"));
+    ui->pushButton_12->setIconSize(QSize(72,72));
+    ui->pushButton_13->setIcon(QIcon(":/res/enter.png"));
+    ui->pushButton_13->setIconSize(QSize(72,72));
 
     QSignalMapper *signalMapper = new QSignalMapper(this);
     connect(ui->pushButton_0, SIGNAL(clicked()), signalMapper, SLOT(map()));
@@ -28,6 +33,8 @@ FormDigital::FormDigital(QWidget *parent) :
     connect(ui->pushButton_7, SIGNAL(clicked()), signalMapper, SLOT(map()));
     connect(ui->pushButton_8, SIGNAL(clicked()), signalMapper, SLOT(map()));
     connect(ui->pushButton_9, SIGNAL(clicked()), signalMapper, SLOT(map()));
+    connect(ui->pushButton_12, SIGNAL(clicked()), signalMapper, SLOT(map()));
+    connect(ui->pushButton_13, SIGNAL(clicked()), signalMapper, SLOT(map()));
 
     signalMapper->setMapping(ui->pushButton_0, 0);
     signalMapper->setMapping(ui->pushButton_1, 1);
@@ -39,12 +46,14 @@ FormDigital::FormDigital(QWidget *parent) :
     signalMapper->setMapping(ui->pushButton_7, 7);
     signalMapper->setMapping(ui->pushButton_8, 8);
     signalMapper->setMapping(ui->pushButton_9, 9);
+    signalMapper->setMapping(ui->pushButton_12, 12);
+    signalMapper->setMapping(ui->pushButton_13, 13);
 
     connect(signalMapper, SIGNAL(mapped(int)), this, SLOT(clickButton(int)));
 
     int nCount = ui->gridLayout->columnCount();
     nCount = ui->gridLayout->rowCount();
-    for(int i=1; i < 4;i++) {
+    for(int i=0; i < 4;i++) {
         ui->gridLayout->setColumnMinimumWidth(i,72);
     }
 }
@@ -87,22 +96,24 @@ void FormDigital::clickButton(int index)
     else if (index == 13)
     {
         /* enter */
-        QString str = inputEdit->text();
-        emit commit(str);
-        inputEdit->setText("");
-        hide();
+        keyPressEvent = new QKeyEvent(QEvent::KeyPress, Qt::Key_Enter,
+                                      Qt::NoModifier);
+//        QString str = inputEdit->text();
+//        emit commit(str);
+//        inputEdit->setText("");
+//        hide();
     }
-    QString str = QString("%1").arg(index);
-    QInputMethodEvent event;
-    event.setCommitString(str);
+//    QString str = QString("%1").arg(index);
+//    QInputMethodEvent event;
+//    event.setCommitString(str);
 //    QObject *focusObject = focusWidget();
 //    QGuiApplication::sendEvent(focusObject, &event);
-    if(m_inputEdit)
-        QGuiApplication::sendEvent(m_inputEdit, &event);
+//    if(m_inputEdit)
+//        QGuiApplication::sendEvent(m_inputEdit, &event);
 
     if (keyPressEvent != NULL)
     {
-        QGuiApplication::postEvent(inputEdit, keyPressEvent);
+        QGuiApplication::postEvent(m_inputEdit, keyPressEvent);
     }
 }
 

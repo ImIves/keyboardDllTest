@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>res/keyboard.css</file>
+        <file>res/backspace.png</file>
+        <file>res/enter.png</file>
     </qresource>
 </RCC>
